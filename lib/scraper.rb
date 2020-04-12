@@ -28,15 +28,15 @@ def self.scrape_profile_page(profile_url)
   profile = Nokogiri::HTML(html)
   profile.css("div.main-wrapper.profile .social-icon-container a").each do |social|
     
-      if social.attribute("href").value.include?("twitter.com")
+    if social.attribute("href").value.include?("twitter.com")
         attributes_hash[:twitter] = social.attribute("href").value
-      elsif social.attribute("href").value.include?("linkedin")
+    elsif social.attribute("href").value.include?("linkedin")
         attributes_hash[:linkedin] = social.attribute("href").value
-     elsif social.attribute("href").value.include?("github")
+    elsif social.attribute("href").value.include?("github")
        attributes_hash[:github] = social.attribute("href").value
-     else
+    else
       attributes_hash[:blog] = social.attribute("href").value
-     end
+    end
    end
 
     attributes_hash[:profile_quote] = profile.css("div.main-wrapper.profile .vitals-text-container .profile-quote").text
