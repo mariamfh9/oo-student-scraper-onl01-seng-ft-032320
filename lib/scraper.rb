@@ -26,36 +26,24 @@ def self.scrape_profile_page(profile_url)
   attributes_hash = {}
   html = open(profile_url)
   profile = Nokogiri::HTML(html)
-   #binding.pry
-  profile.css("main-wrapper.profile.social-icon-container a").each do |student|
+  profile.css("div.main-wrapper.profile .social-icon-container a").each do |social|
     
-    if student.attribute("href").value.include?("twitter.com")
-      attributes_hash[:twitter] = student.attribute("href").value
-     
-    elsif student.attribute("href").value.include?("linkedin.com")
-      attributes_hash[:linkedin] = student.attribute("href").value
-    
-    elsif student.attribute("href").value.include?("github.com")
-      attributes_hash[:github] = student.attribute("href").value 
-      
-    else 
-      attributes_hash[:blog] = student.attribute("href").value
-    end 
-    
-    attributes_hash[:profile_quote] = profile.css("div.main-wrapper.profile.vitals-text-container .profile-quote").text
-    attributes_hash[:bio] = profile.css("div.main-wrapper.profile.description-holder p").text
-     
+      if social.attribute("href").value.include?("twitter.com")
+        attributes_hash[:twitter] = social.attribute("href").value
+      elsif social.attribute("href").value.include?("linkedin")
+        attributes_hash[:linkedin] = social.attribute("href").value
+     elsif social.attribute("href").value.include?("github")
+       attributes_hash[:github] = social.attribute("href").value
+     else
+      attributes_hash[:blog] = social.attribute("href").value
+     end
    end
 
-   
+    attributes_hash[:profile_quote] = profile.css("div.main-wrapper.profile .vitals-text-container .profile-quote").text
+    attributes_hash[:bio] = profile.css("div.main-wrapper.profile .description-holder p").text
 
     attributes_hash
-
-   
-    
-  end 
- 
-
+end 
 
 
 end
