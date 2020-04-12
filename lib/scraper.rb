@@ -42,12 +42,12 @@ def self.scrape_profile_page(profile_url)
       attributes_hash[:blog] = student.attribute("href").value
     end 
     
-    
+    attributes_hash[:profile_quote] = profile.css("div.main-wrapper.profile.vitals-text-container .profile-quote").text
+    attributes_hash[:bio] = profile.css("div.main-wrapper.profile.description-holder p").text
      
    end
 
-    attributes_hash[:profile_quote] = profile.css("div.main-wrapper.profile .vitals-text-container .profile-quote").text
-    attributes_hash[:bio] = profile.css("div.main-wrapper.profile .description-holder p").text
+   
 
     attributes_hash
 
@@ -55,8 +55,7 @@ def self.scrape_profile_page(profile_url)
     
   end 
  
- 
-  end
+
 
 
 end
